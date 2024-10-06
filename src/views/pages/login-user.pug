@@ -1,0 +1,16 @@
+extends ../layouts/main-layout
+
+block content
+  include ../partials/errors
+  form(action="/login", method="POST")
+    h1 Log In
+
+    div
+      label(for="email") Email
+      input(type="email", name="email" value="john.doe@gmail.com")
+
+    div
+      label(for="password") Password
+      input(type="password", name="password" id="password" value="secret")
+
+    input(type="submit", value="Submit")

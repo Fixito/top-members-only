@@ -1,0 +1,6 @@
+if errors
+  ul
+    each error in Object.entries(errors.fieldErrors)
+      li #{error[0]}: #{error[1][0]}
+else
+  div= error.message

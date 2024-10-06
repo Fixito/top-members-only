@@ -1,0 +1,7 @@
+extends ../layouts/main-layout
+
+block content
+  h1= error && error.status ? error.status : message
+  if error && error.stack
+    pre #{error.stack}
+  a(href='/') Back to Home
