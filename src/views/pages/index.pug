@@ -14,7 +14,9 @@ block content
     each message in messages
       li
         h3 #{message.title}
-        if user && user.membership_status === "premium"
+        if user && user.membership_status  !== "basic"
           p #{message.created_at}
           p #{message.first_name} #{message.last_name}
         p #{message.message}
+        if user && user.membership_status === "admin"
+          a(href=`/messages/${message.message_id}/delete`) Delete

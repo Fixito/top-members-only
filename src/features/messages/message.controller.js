@@ -20,18 +20,40 @@ const getAuthenticatedMessagesBoard = async (req, res) => {
   });
 
   res.render('index', {
-    title: 'Project: Members Only',
     messages: newMessages,
     user: { membership_status: req.user.membership_status },
   });
 };
 
-const createMessageGet = (req, res) => {
+const createMessageGet = (_req, res) => {
   res.render('create-message');
 };
 
-const createMessagePost = (req, res) => {
-  res.render('create-message');
+const createMessagePost = async (req, res) => {
+  const result = req.result;
+
+  if (!result.success) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .render('create-message', {
+        errors: result.error.flatten(),
+      });
+  }
+
+  await messagesService.create({
+    data: result.data,
+    userId: req.user.userId,
+  });
+
+  res.redirect('/');
+};
+
+const remove = async (req, res) => {
+  const {
+    rows: [message],
+  } = await messagesService.remove(req.params.id);
+
+  res.redirect('/');
 };
 
 export {
@@ -39,4 +61,5 @@ export {
   getAuthenticatedMessagesBoard,
   createMessageGet,
   createMessagePost,
+  remove,
 };

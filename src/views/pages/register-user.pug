@@ -1,9 +1,9 @@
 extends ../layouts/main-layout
 
 block content
-  include ../partials/errors
   form(action="/auth/register", method="POST")
-    h2 Sign In
+    include ../partials/errors
+    h1 Sign In
     
     div 
       label(for="firstName") First Name

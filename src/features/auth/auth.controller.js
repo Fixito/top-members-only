@@ -6,9 +6,7 @@ import { attachCookieToResponse } from '../../utils/cookie.utils.js';
 import { comparePasswords } from '../../utils/password.utils.js';
 
 const registerGet = (_req, res) => {
-  res.render('register-user', {
-    title: 'Project: Members Only',
-  });
+  res.render('register-user', {});
 };
 
 const registerPost = async (req, res) => {
@@ -37,9 +35,7 @@ const registerPost = async (req, res) => {
 };
 
 const loginGet = (_req, res) => {
-  res.render('login', {
-    title: 'Project: Members Only',
-  });
+  res.render('login', {});
 };
 
 const loginPost = async (req, res) => {
@@ -48,7 +44,6 @@ const loginPost = async (req, res) => {
   if (!result.success) {
     return res.status(StatusCodes.BAD_REQUEST).render('login', {
       errors: result.error.flatten(),
-      title: 'Project: Members Only',
     });
   }
 
@@ -59,7 +54,6 @@ const loginPost = async (req, res) => {
   if (!user) {
     return res.status(StatusCodes.UNAUTHORIZED).render('login', {
       error: { message: 'Invalid email or password' },
-      title: 'Project: Members Only',
     });
   }
 
@@ -71,7 +65,6 @@ const loginPost = async (req, res) => {
   if (!isPasswordValid) {
     return res.status(StatusCodes.UNAUTHORIZED).render('login', {
       error: { message: 'Invalid email or password' },
-      title: 'Project: Members Only',
     });
   }
 

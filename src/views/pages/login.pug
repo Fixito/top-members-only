@@ -1,8 +1,8 @@
 extends ../layouts/main-layout
 
 block content
-  include ../partials/errors
   form(action="/auth/login", method="POST")
+    include ../partials/errors
     h1 Log In
 
     div

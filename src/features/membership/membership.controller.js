@@ -13,7 +13,6 @@ const createMembershipPost = async (req, res) => {
   if (!result.success) {
     return res.status(StatusCodes.BAD_REQUEST).render('membership', {
       errors: result.error.flatten(),
-      title: 'Project: Members Only',
     });
   }
 
@@ -22,7 +21,6 @@ const createMembershipPost = async (req, res) => {
   if (secretPassword !== 'secret')
     return res.status(StatusCodes.BAD_REQUEST).render('membership', {
       error: { message: 'Invalid password' },
-      title: 'Project: Members Only',
     });
 
   const {

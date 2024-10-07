@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import { verifyToken } from '../utils/token.utils.js';
 import * as messagesController from '../features/messages/message.service.js';
+
 const authenticateUser = async (req, res, next) => {
   let token = null;
 
@@ -30,4 +31,14 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-export { authenticateUser };
+const authorizePermissions = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.membership_status)) {
+      return res.redirect('/');
+    }
+
+    next();
+  };
+};
+
+export { authenticateUser, authorizePermissions };
