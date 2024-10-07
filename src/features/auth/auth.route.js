@@ -9,7 +9,7 @@ import * as authController from './auth.controller.js';
 const router = express.Router();
 
 router
-  .route('/')
+  .route('/login')
   .get(authController.loginGet)
   .post(validator(loginUserSchema), authController.loginPost);
 

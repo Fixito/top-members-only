@@ -29,11 +29,11 @@ const registerPost = async (req, res) => {
 
   attachCookieToResponse(res, 'accessToken', token);
 
-  res.redirect('/messages');
+  res.redirect('/');
 };
 
 const loginGet = (_req, res) => {
-  res.render('index', {
+  res.render('login', {
     title: 'Project: Members Only',
   });
 };
@@ -42,8 +42,9 @@ const loginPost = async (req, res) => {
   const result = req.result;
 
   if (!result.success) {
-    return res.status(StatusCodes.BAD_REQUEST).render('index', {
+    return res.status(StatusCodes.BAD_REQUEST).render('login', {
       errors: result.error.flatten(),
+      title: 'Project: Members Only',
     });
   }
 
@@ -52,8 +53,9 @@ const loginPost = async (req, res) => {
   } = await userService.findByEmail(result.data.email);
 
   if (!user) {
-    return res.status(StatusCodes.UNAUTHORIZED).render('index', {
+    return res.status(StatusCodes.UNAUTHORIZED).render('login', {
       error: { message: 'Invalid email or password' },
+      title: 'Project: Members Only',
     });
   }
 
@@ -63,8 +65,9 @@ const loginPost = async (req, res) => {
   );
 
   if (!isPasswordValid) {
-    return res.status(StatusCodes.UNAUTHORIZED).render('index', {
+    return res.status(StatusCodes.UNAUTHORIZED).render('login', {
       error: { message: 'Invalid email or password' },
+      title: 'Project: Members Only',
     });
   }
 
@@ -75,7 +78,7 @@ const loginPost = async (req, res) => {
 
   attachCookieToResponse(res, 'accessToken', token);
 
-  res.redirect('/messages');
+  res.redirect('/');
 };
 
 const logout = (_req, res) => {

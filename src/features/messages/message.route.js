@@ -11,7 +11,7 @@ router.use(authenticateUser);
 router.route('/').get(messageController.getAll);
 
 router
-  .route('/create')
+  .route('/messages')
   .get(messageController.createMessageGet)
   .post(
     validator(messageSchema),

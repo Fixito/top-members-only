@@ -9,9 +9,7 @@ const authenticateUser = (req, res, next) => {
   } else if (req?.signedCookies?.accessToken) {
     token = req.signedCookies.accessToken;
   } else {
-    return res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ message: 'Unauthorized' });
+    return next();
   }
 
   try {
@@ -22,9 +20,11 @@ const authenticateUser = (req, res, next) => {
     req.user = { userId, membership_status };
     next();
   } catch (error) {
-    return res
+    res
       .status(StatusCodes.UNAUTHORIZED)
-      .json({ message: 'Unauthorized' });
+      .json({
+        message: 'You are not authorized to access this route',
+      });
   }
 };
 

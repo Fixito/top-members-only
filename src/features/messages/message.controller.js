@@ -4,6 +4,7 @@ import { formatDate } from '../../utils/date.utils.js';
 
 const getAll = async (req, res) => {
   const { rows: messages } = await messagesService.getAll();
+  let data = { title: 'Project: Members Only' };
 
   const newMessages = messages.map((messages) => {
     const formattedDate = formatDate(messages.created_at);
@@ -13,12 +14,15 @@ const getAll = async (req, res) => {
     };
   });
 
-  res.status(StatusCodes.OK).render('messages-board', {
-    messages: newMessages,
-    user: {
-      membership_status: req.user.membership_status,
-    },
-  });
+  data.messages = newMessages;
+
+  if (req.user) {
+    data.user = {
+      membership_status: req.user.membership_status || 'basic',
+    };
+  }
+
+  res.status(StatusCodes.OK).render('index', data);
 };
 
 const createMessageGet = (req, res) => {
