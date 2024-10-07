@@ -15,12 +15,16 @@ const registerPost = async (req, res) => {
   const result = req.result;
 
   if (!result.success) {
-    return res.status(StatusCodes.BAD_REQUEST).render('index', {
-      errors: result.error.flatten(),
-    });
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .render('register-user', {
+        errors: result.error.flatten(),
+      });
   }
 
-  const { rows: user } = await authService.register(result.data);
+  const {
+    rows: [user],
+  } = await authService.register(result.data);
 
   const token = createAccessToken({
     userId: user.user_id,

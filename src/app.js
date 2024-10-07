@@ -15,8 +15,8 @@ app.set('view engine', 'pug');
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', messages);
 app.use('/auth', auth);
+app.use('/', messages);
 app.use('/membership', membership);
 
 app.use(notFound);

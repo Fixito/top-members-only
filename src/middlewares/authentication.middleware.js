@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import { verifyToken } from '../utils/token.utils.js';
-
-const authenticateUser = (req, res, next) => {
+import * as messagesController from '../features/messages/message.service.js';
+const authenticateUser = async (req, res, next) => {
   let token = null;
 
   if (req?.headers?.authorization?.startsWith('Bearer')) {
@@ -9,7 +9,10 @@ const authenticateUser = (req, res, next) => {
   } else if (req?.signedCookies?.accessToken) {
     token = req.signedCookies.accessToken;
   } else {
-    return next();
+    const { rows: messages } = await messagesController.getAll();
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .render('index', { messages });
   }
 
   try {
@@ -20,11 +23,10 @@ const authenticateUser = (req, res, next) => {
     req.user = { userId, membership_status };
     next();
   } catch (error) {
-    res
+    const { rows: messages } = await messagesController.getAll();
+    return res
       .status(StatusCodes.UNAUTHORIZED)
-      .json({
-        message: 'You are not authorized to access this route',
-      });
+      .render('index', { messages });
   }
 };
 

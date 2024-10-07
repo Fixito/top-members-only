@@ -5,15 +5,16 @@ block content
   div 
     if user
       a(href="/messages") Create a new message
-      a(href="/membership") Join the club
+      if user.membership_status === "basic"
+        a(href="/membership") Join the club
       a(href="/auth/logout") Logout
-    else
+    else 
       a(href="/auth/login") Login
   ul
     each message in messages
       li
         h3 #{message.title}
-        p #{message.created_at}
         if user && user.membership_status === "premium"
+          p #{message.created_at}
           p #{message.first_name} #{message.last_name}
         p #{message.message}

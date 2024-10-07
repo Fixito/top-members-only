@@ -8,7 +8,9 @@ const router = express.Router();
 
 router.use(authenticateUser);
 
-router.route('/').get(messageController.getAll);
+router
+  .route('/')
+  .get(messageController.getAuthenticatedMessagesBoard);
 
 router
   .route('/messages')

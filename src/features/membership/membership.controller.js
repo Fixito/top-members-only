@@ -3,7 +3,7 @@ import * as membershipController from './membership.service.js';
 import { createAccessToken } from '../../utils/token.utils.js';
 import { attachCookieToResponse } from '../../utils/cookie.utils.js';
 
-const createMembershipGet = (req, res) => {
+const createMembershipGet = (_req, res) => {
   res.render('membership');
 };
 

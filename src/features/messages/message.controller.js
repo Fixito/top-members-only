@@ -2,9 +2,14 @@ import { StatusCodes } from 'http-status-codes';
 import * as messagesService from './message.service.js';
 import { formatDate } from '../../utils/date.utils.js';
 
-const getAll = async (req, res) => {
+const getAll = async (_req, res) => {
   const { rows: messages } = await messagesService.getAll();
-  let data = { title: 'Project: Members Only' };
+  res.status(StatusCodes.OK).render('index', { messages });
+};
+
+const getAuthenticatedMessagesBoard = async (req, res) => {
+  const { rows: messages } =
+    await messagesService.getAuthenticatedMessages();
 
   const newMessages = messages.map((messages) => {
     const formattedDate = formatDate(messages.created_at);
@@ -14,15 +19,11 @@ const getAll = async (req, res) => {
     };
   });
 
-  data.messages = newMessages;
-
-  if (req.user) {
-    data.user = {
-      membership_status: req.user.membership_status || 'basic',
-    };
-  }
-
-  res.status(StatusCodes.OK).render('index', data);
+  res.render('index', {
+    title: 'Project: Members Only',
+    messages: newMessages,
+    user: { membership_status: req.user.membership_status },
+  });
 };
 
 const createMessageGet = (req, res) => {
@@ -33,4 +34,9 @@ const createMessagePost = (req, res) => {
   res.render('create-message');
 };
 
-export { getAll, createMessageGet, createMessagePost };
+export {
+  getAll,
+  getAuthenticatedMessagesBoard,
+  createMessageGet,
+  createMessagePost,
+};
