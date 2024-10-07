@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import * as messagesService from './message.service.js';
 import { formatDate } from '../../utils/date.utils.js';
 
-const getAll = async (_req, res) => {
+const getAll = async (req, res) => {
   const { rows: messages } = await messagesService.getAll();
 
   const newMessages = messages.map((messages) => {
@@ -13,9 +13,12 @@ const getAll = async (_req, res) => {
     };
   });
 
-  res
-    .status(StatusCodes.OK)
-    .render('messages-board', { messages: newMessages });
+  res.status(StatusCodes.OK).render('messages-board', {
+    messages: newMessages,
+    user: {
+      membership_status: req.user.membership_status,
+    },
+  });
 };
 
 const createMessageGet = (req, res) => {

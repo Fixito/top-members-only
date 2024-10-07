@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import errorHandler from './middlewares/error-handler.middleware.js';
 import notFound from './middlewares/not-found.middleware.js';
 import { auth } from './features/auth/index.js';
+import { membership } from './features/membership/index.js';
 import { messages } from './features/messages/index.js';
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/', auth);
 app.use('/messages', messages);
+app.use('/membership', membership);
 
 app.use(notFound);
 app.use(errorHandler);

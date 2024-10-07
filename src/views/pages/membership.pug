@@ -1,0 +1,13 @@
+extends ../layouts/main-layout
+
+block content
+  include ../partials/errors
+  form(action="/membership", method="POST")
+    h1 Join the club!
+
+    div
+      label(for="secretPassword") Enter the secret Password
+      input(type="password", name="secretPassword" id="secretPassword" value="secret")
+
+    div
+      input(type="submit", value="Submit")

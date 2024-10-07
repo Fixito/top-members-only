@@ -15,8 +15,11 @@ const authenticateUser = (req, res, next) => {
   }
 
   try {
-    const decoded = verifyToken(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    const { userId, membership_status } = verifyToken(
+      token,
+      process.env.JWT_SECRET
+    );
+    req.user = { userId, membership_status };
     next();
   } catch (error) {
     return res

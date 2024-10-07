@@ -2,12 +2,15 @@ extends ../layouts/main-layout
 
 block content
   h1 Messages Board
-  a(href="/messages/create") Create a new essage
+  div 
+    a(href="/messages/create") Create a new message
+    a(href="/membership") Join the club
+    a(href="/logout") Logout
   ul
     each message in messages
       li
         h3 #{message.title}
         p #{message.created_at}
-        if message.role === "premium"
+        if user.membership_status === "premium"
           p #{message.first_name} #{message.last_name}
         p #{message.message}

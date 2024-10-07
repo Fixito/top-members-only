@@ -23,7 +23,7 @@ const registerPost = async (req, res) => {
   const { rows: user } = await authService.register(result.data);
 
   const token = createAccessToken({
-    id: user.id,
+    userId: user.user_id,
     membership_status: user.membership_status,
   });
 
@@ -49,7 +49,7 @@ const loginPost = async (req, res) => {
 
   const {
     rows: [user],
-  } = await userService.getByEmail(result.data.email);
+  } = await userService.findByEmail(result.data.email);
 
   if (!user) {
     return res.status(StatusCodes.UNAUTHORIZED).render('index', {
@@ -69,7 +69,7 @@ const loginPost = async (req, res) => {
   }
 
   const token = createAccessToken({
-    id: user.id,
+    userId: user.user_id,
     membership_status: user.membership_status,
   });
 
@@ -78,4 +78,9 @@ const loginPost = async (req, res) => {
   res.redirect('/messages');
 };
 
-export { loginGet, loginPost, registerGet, registerPost };
+const logout = (_req, res) => {
+  res.clearCookie('accessToken');
+  res.redirect('/');
+};
+
+export { loginGet, loginPost, logout, registerGet, registerPost };
