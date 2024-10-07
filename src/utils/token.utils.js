@@ -5,4 +5,7 @@ const createAccessToken = (payload) =>
     expiresIn: process.env.ACCESS_TOKEN_LIFETIME,
   });
 
-export { createAccessToken };
+const verifyToken = (token) =>
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+export { createAccessToken, verifyToken };

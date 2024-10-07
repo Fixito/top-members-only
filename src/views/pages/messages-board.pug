@@ -2,4 +2,12 @@ extends ../layouts/main-layout
 
 block content
   h1 Messages Board
-  a(href="/messages/create") Create Message
+  a(href="/messages/create") Create a new essage
+  ul
+    each message in messages
+      li
+        h3 #{message.title}
+        p #{message.created_at}
+        if message.role === "premium"
+          p #{message.first_name} #{message.last_name}
+        p #{message.message}

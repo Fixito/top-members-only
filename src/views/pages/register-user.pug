@@ -1,0 +1,27 @@
+extends ../layouts/main-layout
+
+block content
+  include ../partials/errors
+  form(action="/register", method="POST")
+    h2 Sign In
+    
+    div 
+      label(for="firstName") First Name
+      input(type="text", name="firstName" id="firstName" value="John")
+    div 
+      label(for="lastName") Last Name
+      input(type="text", name="lastName" id="lastName" value="Doe")
+    div 
+      label(for="email") Email
+      input(type="email", name="email" value="john.doe@gmail.com")
+    div 
+      label(for="password") Password
+      input(type="password", name="password" id="password" value="secret")
+    div 
+      label(for="confirmPassword") Confirm Password
+      input(type="password", name="confirmPassword" id="confirmPassword" value="secret")
+
+    div
+      input(type="submit", value="Submit")
+      p Already have an account? 
+        a(href="/") Log In here

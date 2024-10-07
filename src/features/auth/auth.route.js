@@ -10,12 +10,12 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(authController.registerGet)
-  .post(validator(registerUserSchema), authController.registerPost);
-
-router
-  .route('/login')
   .get(authController.loginGet)
   .post(validator(loginUserSchema), authController.loginPost);
+
+router
+  .route('/register')
+  .get(authController.registerGet)
+  .post(validator(registerUserSchema), authController.registerPost);
 
 export default router;

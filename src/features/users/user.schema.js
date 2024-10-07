@@ -19,7 +19,7 @@ const registerUserSchema = z
 
 const loginUserSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(6),
+  password: z.string(),
 });
 
 export { loginUserSchema, registerUserSchema };
